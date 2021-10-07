@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Task from "./components/Task/Task";
+import store from './store/store'
+import { observer } from 'mobx-react'
+import {TaskInput} from "./components/TaskInput/TaskInput";
+import {FilterButton} from "./components/FilterButton/FilterButton";
 
 function App() {
+  const {filteredTasks, activeTasks} = store
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1 className="top">Active tasks: {activeTasks}</h1>
+      <div className="button-container">
+        <FilterButton text={"Done"} action={() => store.changeFilter('done')}/>
+        <FilterButton text={"Active"} action={() => store.changeFilter('unfilled')}/>
+        <FilterButton text={"All"} action={() => store.changeFilter('all')}/>
+      </div>
+      {filteredTasks?.map(task => (
+        <Task
+          doneTask={() => store.doneTask(task.id)}
+          deleteTask={() => store.deleteTask(task.id)}
+          task={task}
+          key={task.id}
+        />
+      ))}
+      <TaskInput add={(task: string) => store.addTask(task)}/>
     </div>
   );
 }
 
-export default App;
+export default observer(App);

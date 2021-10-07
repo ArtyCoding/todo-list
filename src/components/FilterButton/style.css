@@ -1,0 +1,21 @@
+.filter-button {
+  width: 180px;
+  border: 3px solid #04395e;
+  background-color: #04395e;
+  color: #fff;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+@media screen and (max-width: 612px){
+  .filter-button{
+    width: 100px;
+  }
+}
+
+@media screen and (max-width: 391px){
+  .filter-button{
+    width: 70px;
+  }
+}
